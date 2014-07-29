@@ -1,3 +1,9 @@
+# Google Playstore Screenshots
+screenshots/
+
+# keystore
+MD-Keystore
+
 # Built application files
 *.apk
 *.ap_

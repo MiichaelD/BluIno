@@ -172,7 +172,10 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		 * mHandler.sendMessage(msg); }
 		 */{
 			int action = event.getAction() & MotionEvent.ACTION_MASK;
+			//deprecated
 			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_ID_MASK) >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+			//int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK ) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+			
 			int pointerId = event.getPointerId(pointerIndex);
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
