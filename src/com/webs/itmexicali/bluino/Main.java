@@ -1,7 +1,8 @@
 package com.webs.itmexicali.bluino;
 
-import com.google.android.gms.ads.*;
+import com.webs.itmexicali.bluino.ads.Advertising;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -19,7 +20,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,6 +31,7 @@ public class Main extends Activity {
     public static final String TAG = "BluIno";
     public static final boolean D = false;
     
+    Advertising pAds = null; // Ads Service Object     
     
     public SharedPreferences settings;// To save preferences accessible by other Apps, just 
     public SharedPreferences.Editor settingsEditor;
@@ -60,16 +61,6 @@ public class Main extends Activity {
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
     
-
-    //AdMob Advertising
-    /** The view to show the ad. */
-    private AdView adView;
-
-    /** Your ad unit id. Replace with your actual ad unit id. */
-    private static final String AD_UNIT_ID = "ca-app-pub-4741238402050454/9514283406";
-    		//this is for package name: com.itmexicali.webs.bluino
-    		//"ca-app-pub-4741238402050454/3079300200";
-    
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,51 +73,9 @@ public class Main extends Activity {
         //PView=new PadView(this);
         //PView = (PadView) findViewById(R.id.padView);
         
-        /*************************************	ADS ADMOB	*********************************************/
-        // Create an ad.
-        adView = new AdView(this);
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(AD_UNIT_ID);
-        adView.setAdListener(new AdListener() {
-        	  @Override
-        	  public void onAdOpened() {
-        	    // Save app state before going to the ad overlay.
-        		  if(Main.D){
-        			  Log.d(TAG,"AdView - Opened");
-        		  }
-        	  }
-        	  @Override
-        	  public void onAdFailedToLoad(int errorCode){
-        		  if(Main.D){
-        			  Log.d(TAG,"AdView - FailedToLoad = "+errorCode);
-        		  }
-        	  }
-        	});
-        
-        // Add the AdView to the view hierarchy. The view will have no size
-        // until the ad is loaded.
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.LayMain);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-        		RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-    	params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        layout.addView(adView, params);
-        
-        
-        //LinearLayout layout = (LinearLayout) findViewById(R.id.linLayMain);
-        //layout.addView(adView);
-
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device.
-        AdRequest adRequest = new AdRequest.Builder()
-            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-            //.addTestDevice("584586A082596B5844C4E301E1285E95") //My Nexus 4
-            .build();
-
-        // Start loading the ad in the background.
-        adView.loadAd(adRequest);
-        /*************************************	ADS ADMOB	*********************************************/
-        
+        if(Advertising.SHOW_ADS){
+        	initAds();
+        }        
 
         //get the preferences saved on the file named as TAG
         settings = getSharedPreferences(TAG, 0);					//to read
@@ -234,6 +183,66 @@ public class Main extends Activity {
         }
         
     }
+    
+    
+    /** Load ads if they are enabled, depending on the ads service using load
+	 * the corresponding one AirPush or AdMob*/
+	private void initAds(){
+		
+		/* Now the ads object is just created once, not destroying it and loading it if 
+		 * it already exists, to change dad, remove the pAds == null validation from next
+		 * if clause*/		
+		if(Advertising.SHOW_ADS && pAds == null){
+			RelativeLayout layout = (RelativeLayout) findViewById(R.id.LayMain);
+			
+			/* If we want to create a new banner, destroy and remove current if it exists*/
+			if (pAds != null && pAds.getBanner() != null){
+				layout.removeView(pAds.getBanner());
+				pAds.destroyBanner();
+			}
+			
+			switch(Advertising.AD_SERVICE){
+			case Advertising.ADS_ADMOB:
+				pAds = new com.webs.itmexicali.bluino.ads.AdMob(this);
+				break;
+				
+			case Advertising.ADS_AIRPUSH_BUNDLE:
+				pAds = new com.webs.itmexicali.bluino.ads.AirPushBundle(this);
+				break;
+				
+			case Advertising.ADS_AIRPUSH_STANDARD:
+				pAds = new com.webs.itmexicali.bluino.ads.AirPushStandard(this);
+				break;
+			}
+			
+			// Add the AdView to the view hierarchy. The view will have no size
+	        // until the ad is loaded.
+	        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+	        		RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+	        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+	    	params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+	        layout.addView(pAds.getBanner(), params);
+			
+		}
+		
+	}
+	
+	/** Load Interstitial ads, some ads-services like airPush
+	 * needs to call SmartWallAds before showing them*/
+	public void loadInterstitial(){
+		Log.d(this.getLocalClassName(),"Loading interstitial");
+		if(pAds != null)
+			pAds.loadInterstitial();
+	}
+	
+	
+
+	/** Invoke displayInterstitial() when you are ready to display an interstitial.*/
+	public void displayInterstitial() {
+		Log.d(this.getLocalClassName(),"Displaying interstitial");
+		if(pAds != null)
+			pAds.showInterstitial();
+	}
 
     @Override
     public synchronized void onResume() {
@@ -251,9 +260,9 @@ public class Main extends Activity {
             }
         }
         
-        //AdMob Advertising
-        if (adView != null) {
-            adView.resume();
+        
+        if (pAds != null) {
+        	pAds.onResume();
         }
     }
 
@@ -271,10 +280,9 @@ public class Main extends Activity {
     public synchronized void onPause() {
     	if(D) Log.e(TAG, "- ON PAUSE -");
     	
-    	//AdMob Advertising
-    	if (adView != null) {
-    	      adView.pause();
-    	}
+    	if (pAds != null) {
+        	pAds.onPause();
+        }
         
     	super.onPause();
         
@@ -331,7 +339,8 @@ public class Main extends Activity {
 
 
     // The Handler that gets information back from the BlueInterfaceService
-    private final Handler mHandler = new Handler() {    	
+    @SuppressLint("HandlerLeak")
+	private final Handler mHandler = new Handler() {    	
     @Override
     public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -339,6 +348,7 @@ public class Main extends Activity {
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
                 case BluetoothService.STATE_CONNECTED:
+                	loadInterstitial();
                     //Let arduino Know the ratio we're going to use.
                     BluetoothService.mBlueService.write(('L'+PadView.intToString(Options.getInstance().getLBarValue())
                     		+'R'+PadView.intToString(Options.getInstance().getLBarValue())).getBytes());
@@ -346,6 +356,8 @@ public class Main extends Activity {
                 case BluetoothService.STATE_CONNECTING:
                     break;
                 case BluetoothService.STATE_LISTEN:
+                	displayInterstitial();
+                	break;
                 case BluetoothService.STATE_NONE:
                     break;
                 }
@@ -419,6 +431,8 @@ public class Main extends Activity {
                 // User did not enable Bluetooth or an error occured
                 Log.d(TAG, "BT not enabled");
                 Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
+                
+                displayInterstitial();
                 //finish();
             }
         }
