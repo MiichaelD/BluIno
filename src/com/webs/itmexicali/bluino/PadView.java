@@ -89,10 +89,10 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 			canvas.drawColor(Color.DKGRAY);
 			if (BluetoothService.mBlueService != null &&
 					BluetoothService.mBlueService.getState() == BluetoothService.STATE_CONNECTED) {
-				canvas.drawCircle(screen.exactCenterX(), screen.height() / 8, ball1.getRect().width() / 2, pBlue);
-				canvas.drawText(getContext().getString(R.string.title_connected), screen.centerX(), (getHeight() / 8) + textSize * 2, p);
+				canvas.drawCircle(screen.exactCenterX(), screen.height() / 4, ball1.getRect().width() / 2, pBlue);
+				canvas.drawText( getContext().getString(R.string.title_connected), screen.centerX(), (getHeight() / 4) + textSize * 2, p);
 			} else {
-				canvas.drawCircle(getWidth() / 2, getHeight() / 4, ball1.getRect().width() / 2, pRed);
+				canvas.drawCircle(screen.exactCenterX(), screen.height() / 4, ball1.getRect().width() / 2, pRed);
 				canvas.drawText( getContext().getString(R.string.title_not_connected), screen.centerX(), (getHeight() / 4) + textSize * 2, p);
 			}
 			canvas.drawRect(bar1, p);
