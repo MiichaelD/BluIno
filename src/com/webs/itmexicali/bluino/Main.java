@@ -31,6 +31,9 @@ public class Main extends Activity {
     public static final String TAG = "BluIno";
     public static final boolean D = false;
     
+    /** Let the activity know that it is exiting, when closing sockets*/
+    private boolean pExiting = false;
+    
     Advertising pAds = null; // Ads Service Object     
     
     public SharedPreferences settings;// To save preferences accessible by other Apps, just 
@@ -240,6 +243,9 @@ public class Main extends Activity {
 	/** Invoke displayInterstitial() when you are ready to display an interstitial.*/
 	public void displayInterstitial() {
 		Log.d(this.getLocalClassName(),"Displaying interstitial");
+		if(pExiting)
+			return;
+		
 		if(pAds != null)
 			pAds.showInterstitial();
 	}
@@ -506,13 +512,18 @@ public class Main extends Activity {
     	  if(D){
       		Log.i(TAG,"*OnRestoreInstanceState*");
       	}
-    	  // Restore UI state from the savedInstanceState.
-    	  // This bundle has also been passed to onCreate.
-    	  boolean myBoolean = savedInstanceState.getBoolean("MyBoolean");
-    	  double myDouble = savedInstanceState.getDouble("myDouble");
-    	  //i = savedInstanceState.getInt("timesClosed");
-    	  String myString = savedInstanceState.getString("MyString");
-    	}
+	  // Restore UI state from the savedInstanceState.
+	  // This bundle has also been passed to onCreate.
+	  boolean myBoolean = savedInstanceState.getBoolean("MyBoolean");
+	  double myDouble = savedInstanceState.getDouble("myDouble");
+	  //i = savedInstanceState.getInt("timesClosed");
+	  String myString = savedInstanceState.getString("MyString");
+	}
 
+    @Override
+	public void onBackPressed(){
+    	pExiting = true;
+		super.onBackPressed();
+	}
     
 }
