@@ -24,32 +24,29 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	private boolean run;
 	private SurfaceHolder sh;
 	private Paint p, pRed, pBlue, pControls;
-	private int touchX[] = new int[2], touchY[] = new int[2], origenY[] = new int[2], origenX[] = new int[2],	textSize, w ,h;
+	private static int MAX_TOUCH_POINTS = 3;
+	private int touchX[] = new int[MAX_TOUCH_POINTS], touchY[] = new int[MAX_TOUCH_POINTS], origenY[] = new int[MAX_TOUCH_POINTS], origenX[] = new int[MAX_TOUCH_POINTS],	textSize, w ,h;
 	private Rect screen, bar1, bar2, aux, notif;
 	private Ball ball1, ball2, curBall[] = new Ball[2];
 	private Thread tDraw;
 	private Bitmap bluinoBMP;
 	public static final int UMBRAL_TACTIL = 70;
 	private String canTextL = "", canTextR = "";
-	private Context mContext;
 
 	
 	/********************************************CONSTRUCTORS*****************************/
 	public PadView(Context context) {
 		super(context);
-		mContext = context;
 		initHolder(context);
 	}
 	
 	public PadView(Context context, AttributeSet attrs, int defStyle){
         super( context , attrs , defStyle );
-        mContext = context;
         initHolder(context);
     }
 
     public PadView ( Context context , AttributeSet attrs ){
         super( context , attrs );
-        mContext = context;
         initHolder(context);
     }
     /**************************************************************************************/
@@ -177,6 +174,8 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 			//int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK ) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 			
 			int pointerId = event.getPointerId(pointerIndex);
+			if( pointerId >= MAX_TOUCH_POINTS)
+				return false;
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_POINTER_DOWN:
