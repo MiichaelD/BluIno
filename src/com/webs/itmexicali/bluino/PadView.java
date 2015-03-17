@@ -24,10 +24,10 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	private boolean run;
 	private SurfaceHolder sh;
 	private Paint p, pRed, pBlue, pControls;
-	private static int MAX_TOUCH_POINTS = 3;
+	private final static int MAX_TOUCH_POINTS = 3;
 	private int touchX[] = new int[MAX_TOUCH_POINTS], touchY[] = new int[MAX_TOUCH_POINTS], origenY[] = new int[MAX_TOUCH_POINTS], origenX[] = new int[MAX_TOUCH_POINTS],	textSize, w ,h;
 	private Rect screen, bar1, bar2, aux, notif;
-	private Ball ball1, ball2, curBall[] = new Ball[2];
+	private Ball ball1, ball2, curBall[] = new Ball[MAX_TOUCH_POINTS];
 	private Thread tDraw;
 	private Bitmap bluinoBMP;
 	public static final int UMBRAL_TACTIL = 70;
@@ -322,7 +322,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 				top + 5 + w + (bottom - top) / 2, Ball.LEFT_BAR);
 		ball2 = new Ball(4 * left - w - (w / 2), top - w - 5 + (bottom - top)
 				/ 2, 4 * left + w + (w / 2), top + w + 5 + (bottom - top) / 2,	Ball.RIGHT_BAR);
-		notif=new Rect(screen.centerX()-w-(UMBRAL_TACTIL/2), (screen.height() / 8)-w-5, (screen.centerX())+w+(UMBRAL_TACTIL/2), (screen.height() / 8)+w+5);
+		notif=new Rect(screen.centerX()-w-(UMBRAL_TACTIL/2), (screen.height() / 4)-w-5, (screen.centerX())+w+(UMBRAL_TACTIL/2), (screen.height() / 4)+w+5);
 		
 		bluinoBMP=resizeImage(this.getContext(),R.drawable.bluinotooth,7*w,2*getHeight()/8);
 
