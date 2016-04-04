@@ -1,7 +1,6 @@
 package com.webs.itmexicali.bluino;
 
 import android.graphics.Rect;
-import android.util.Log;
 
 public class Ball {
 
@@ -31,8 +30,6 @@ public class Ball {
 	public Rect getRect(){
 		return rect;
 	}
-	
-	
 	
 	
 	public boolean puedoMover(int x, int y, Rect sc){

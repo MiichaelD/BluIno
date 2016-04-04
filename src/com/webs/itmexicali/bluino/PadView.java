@@ -24,32 +24,29 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 	private boolean run;
 	private SurfaceHolder sh;
 	private Paint p, pRed, pBlue, pControls;
-	private int touchX[] = new int[2], touchY[] = new int[2], origenY[] = new int[2], origenX[] = new int[2],	textSize, w ,h;
+	private final static int MAX_TOUCH_POINTS = 3;
+	private int touchX[] = new int[MAX_TOUCH_POINTS], touchY[] = new int[MAX_TOUCH_POINTS], origenY[] = new int[MAX_TOUCH_POINTS], origenX[] = new int[MAX_TOUCH_POINTS],	textSize, w ,h;
 	private Rect screen, bar1, bar2, aux, notif;
-	private Ball ball1, ball2, curBall[] = new Ball[2];
+	private Ball ball1, ball2, curBall[] = new Ball[MAX_TOUCH_POINTS];
 	private Thread tDraw;
 	private Bitmap bluinoBMP;
 	public static final int UMBRAL_TACTIL = 70;
 	private String canTextL = "", canTextR = "";
-	private Context mContext;
 
 	
 	/********************************************CONSTRUCTORS*****************************/
 	public PadView(Context context) {
 		super(context);
-		mContext = context;
 		initHolder(context);
 	}
 	
 	public PadView(Context context, AttributeSet attrs, int defStyle){
         super( context , attrs , defStyle );
-        mContext = context;
         initHolder(context);
     }
 
     public PadView ( Context context , AttributeSet attrs ){
         super( context , attrs );
-        mContext = context;
         initHolder(context);
     }
     /**************************************************************************************/
@@ -162,6 +159,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		}
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	public boolean onTouchEvent(MotionEvent event) {
 		/*
 		 * if (BluetoothService.mBlueService.getState() !=
@@ -173,10 +171,12 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		 */{
 			int action = event.getAction() & MotionEvent.ACTION_MASK;
 			//deprecated
-			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_ID_MASK) >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_MASK;
 			//int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK ) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 			
 			int pointerId = event.getPointerId(pointerIndex);
+			if( pointerId >= MAX_TOUCH_POINTS)
+				return false;
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_POINTER_DOWN:
@@ -323,7 +323,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 				top + 5 + w + (bottom - top) / 2, Ball.LEFT_BAR);
 		ball2 = new Ball(4 * left - w - (w / 2), top - w - 5 + (bottom - top)
 				/ 2, 4 * left + w + (w / 2), top + w + 5 + (bottom - top) / 2,	Ball.RIGHT_BAR);
-		notif=new Rect(screen.centerX()-w-(UMBRAL_TACTIL/2), (screen.height() / 8)-w-5, (screen.centerX())+w+(UMBRAL_TACTIL/2), (screen.height() / 8)+w+5);
+		notif=new Rect(screen.centerX()-w-(UMBRAL_TACTIL/2), (screen.height() / 4)-w-5, (screen.centerX())+w+(UMBRAL_TACTIL/2), (screen.height() / 4)+w+5);
 		
 		bluinoBMP=resizeImage(this.getContext(),R.drawable.bluinotooth,7*w,2*getHeight()/8);
 
