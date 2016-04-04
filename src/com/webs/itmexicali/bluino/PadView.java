@@ -159,6 +159,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		}
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	public boolean onTouchEvent(MotionEvent event) {
 		/*
 		 * if (BluetoothService.mBlueService.getState() !=
@@ -170,7 +171,7 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		 */{
 			int action = event.getAction() & MotionEvent.ACTION_MASK;
 			//deprecated
-			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_ID_MASK) >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_MASK;
 			//int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK ) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 			
 			int pointerId = event.getPointerId(pointerIndex);
