@@ -14,7 +14,6 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">BluIno</string>
     <!--  Bluetooth -->
     <string name="send">Enviar</string>
     <string name="illegaldevice">Nombre de dispositivo incorrecto</string>

@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">BluIno</string>
+    <string translatable="false" name="app_name">BluIno</string>
     <!--  Bluetooth -->
     <string name="send">Send</string>
     <string name="illegaldevice">Illegal Device Name</string>

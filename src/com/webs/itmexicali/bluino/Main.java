@@ -209,10 +209,6 @@ public class Main extends Activity {
 				pAds = new com.webs.itmexicali.bluino.ads.AdMob(this);
 				break;
 				
-			case Advertising.ADS_AIRPUSH_BUNDLE:
-				pAds = new com.webs.itmexicali.bluino.ads.AirPushBundle(this);
-				break;
-				
 			case Advertising.ADS_AIRPUSH_STANDARD:
 				pAds = new com.webs.itmexicali.bluino.ads.AirPushStandard(this);
 				break;

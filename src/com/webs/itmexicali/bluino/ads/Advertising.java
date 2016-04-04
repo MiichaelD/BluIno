@@ -16,11 +16,10 @@ public abstract class Advertising {
     	//TODO REPLACE - this iD used for interstitial is from package name: com.itmexicali.webs.bluino
     	INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-4741238402050454/3079300200";
     
-    public static final String
-    	APPID 	=	"237342",
-    	APIKEY	=	"1409523218201390512";
+    public static final String APIKEY = "1409523218201390512";
+    public static final int APPID = 237342;
 
-    public final static int ADS_ADMOB = 0, ADS_AIRPUSH_BUNDLE = 1, ADS_AIRPUSH_STANDARD = 2;
+    public final static int ADS_ADMOB = 0, ADS_AIRPUSH_STANDARD = 1;
 	
 	public final static int AD_SERVICE = ADS_AIRPUSH_STANDARD;
 	
