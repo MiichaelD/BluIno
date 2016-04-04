@@ -4,7 +4,7 @@
     android:versionCode="8"
     android:versionName="1.1.1" >
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="22"/>
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="23"/>
  	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct"  android:required="true" />
@@ -18,16 +18,8 @@
 <!-- AirPush Implementation START -->  
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<!-- AirPush Bundle
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	-->
+  	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 <!-- AirPush Implementation END -->
     
     
@@ -51,28 +43,12 @@
 		<activity android:exported="false" android:name="com.xsqhbao.bipppts201390.AdActivity"
 		-->
 		<!-- AirPush STD -->
-		<activity android:exported="false" android:name="com.xsqhbao.bipppts201390.MainActivity"
+		<activity android:exported="false" android:name="com.xsqhbao.bipppts201390.AdActivity"
 		     android:configChanges="orientation|screenSize"
 			android:theme="@android:style/Theme.Translucent" />
 			
 		<activity android:name="com.xsqhbao.bipppts201390.BrowserActivity"
 			android:configChanges="orientation|screenSize" />
-		<!-- AirPush Bundle
-		<activity android:name="com.xsqhbao.bipppts201390.VActivity"
-		-->
-		<!-- AirPush STD -->
-		<activity android:name="com.xsqhbao.bipppts201390.VDActivity"
-			android:configChanges="orientation|screenSize" android:screenOrientation="sensorLandscape"
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-		</activity> 
-		<!-- AirPush Bundle
-		 <service android:name="com.xsqhbao.bipppts201390.LService" android:exported="false"></service>
-		 <receiver android:name="com.xsqhbao.bipppts201390.BootReceiver" android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
-		-->
 <!-- AirPush Implementation END -->     
         <activity
             android:name="com.webs.itmexicali.bluino.Main"
