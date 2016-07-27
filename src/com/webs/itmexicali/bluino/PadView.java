@@ -170,10 +170,8 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 		 * mHandler.sendMessage(msg); }
 		 */{
 			int action = event.getAction() & MotionEvent.ACTION_MASK;
-			//deprecated
-			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_MASK;
-			//int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK ) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
-			
+			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+			int pointerCount = event.getPointerCount();
 			int pointerId = event.getPointerId(pointerIndex);
 			if( pointerId >= MAX_TOUCH_POINTS)
 				return false;
@@ -231,7 +229,6 @@ public class PadView extends SurfaceView implements Callback, Runnable {
 				break;
 
 			case MotionEvent.ACTION_MOVE:
-				int pointerCount = event.getPointerCount();
 				for (int i = 0; i < pointerCount; i++) {
 					pointerIndex = i;
 					pointerId = event.getPointerId(pointerIndex);
