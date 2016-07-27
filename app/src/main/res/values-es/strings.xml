@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <!--  Bluetooth -->
+    <string name="send">Enviar</string>
+    <string name="illegaldevice">Nombre de dispositivo incorrecto</string>
+    <string name="exit">Salir</string>
+    <string name="head">Frente</string>
+    <string name="back">Trasera</string>
+    <string name="left">Izquierda</string>
+    <string name="right">Derecha</string>
+    <string name="not_connected">No estás conectado a ningun dispositivo</string>
+    <string name="bt_not_enabled_leaving">Bluetooth no fue activado.</string>
+    <string name="title_connecting">conectando...</string>
+    <string name="title_connected_to">conectado: </string>
+    <string name="title_connected">conectado</string>
+    <string name="title_not_connected">no conectado</string>
+    <!--  DeviceListActivity -->
+    <string name="scanning">Buscando dispositivos...</string>
+    <string name="select_device">Selecciona dispositivo para conectar</string>
+    <string name="none_paired">Ningun dispositivo ha sido emparejado</string>
+    <string name="none_found">No se encontraron dispositivos</string>
+    <string name="title_paired_devices">Dispositivos emparejados</string>
+    <string name="title_other_devices">Otros dispositivos disponibles</string>
+    <string name="button_scan">Buscar dispositivos</string>
+    <!-- Options Menu -->
+    <string name="connect">Conectar un dispositivo</string>
+    <string name="discoverable">Hacer detectable</string>
+    <string name="switchable">Cambiar Interface</string>
+    <string name="options">Opciones</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Ok</string>
+    <string name="inputBar1">Valor de barra izquierda:</string>
+    <string name="inputBar2">Valor de barra derecha:</string>
+    <string name="changeValues">Cambiar valores de barras</string>
+    <string name="confUpdated">Configuraciones actualizadas exitosamente</string>
+    <string name="intOnly">Solo numeros enteros</string>
+    <string name="defaults">Predeterminados</string>
+    <string name="maxInputValue">Máximo valor de entrada: 9,999</string>
+</resources>
